@@ -85,22 +85,14 @@ exports.getIncomesOverTime = async (req, res) => {
   try {
     const incomes = await IncomeSchema.aggregate([
       {
-        $project: {
-          year: { $year: "$date" }, // Trích xuất năm từ trường date
-          month: { $month: "$date" }, // Trích xuất tháng từ trường date
-          date: 1, // Bao gồm trường date ban đầu trong projection
-        },
-      },
-      {
         $match: {
-          year: year, // Lọc theo năm
-          month: month, // Lọc theo tháng (1 là tháng một)
+          date: {
+            $gte: new Date(`${year}-${month}-01`),
+            $lt: new Date(`${year}-${parseInt(month) + 1}-01`),
+          },
         },
       },
     ]);
-
-    console.log(incomes);
-
     res.status(200).json(incomes);
   } catch (err) {
     res.status(500).json({ message: "Server Error!" });

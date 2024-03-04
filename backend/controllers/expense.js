@@ -78,3 +78,23 @@ exports.editExpense = async (req, res) => {
     res.status(500).json({ message: "Server Error!" });
   }
 };
+
+exports.getExpensesOverTime = async (req, res) => {
+  const { month, year } = req.params;
+
+  try {
+    const expenses = await ExpenseSchema.aggregate([
+      {
+        $match: {
+          date: {
+            $gte: new Date(`${year}-${month}-01`),
+            $lt: new Date(`${year}-${parseInt(month) + 1}-01`),
+          },
+        },
+      },
+    ]);
+    res.status(200).json(expenses);
+  } catch (err) {
+    res.status(500).json({ message: "Server Error!" });
+  }
+};

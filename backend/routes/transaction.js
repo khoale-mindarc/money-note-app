@@ -12,6 +12,7 @@ const {
   getExpense,
   deleteExpense,
   editExpense,
+  getExpensesOverTime,
 } = require("../controllers/expense");
 const {
   addCategory,
@@ -39,6 +40,7 @@ router
 // expense
 router
   .get("/get-expenses", getExpenses)
+  .get("/get-expenses-over-time/:month/:year", getExpensesOverTime)
   .get("/get-expense/:id", getExpense)
   .post("/add-expense", addExpense)
   .post("/edit-expense/:id", editExpense)
