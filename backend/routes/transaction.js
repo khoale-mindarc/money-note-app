@@ -12,6 +12,13 @@ const {
   deleteExpense,
   editExpense,
 } = require("../controllers/expense");
+const {
+  addCategory,
+  getCategories,
+  getCategory,
+  deleteCategory,
+  editCategory,
+} = require("../controllers/category");
 
 const router = require("express").Router();
 
@@ -29,6 +36,11 @@ router
   .get("/get-expense/:id", getExpense)
   .post("/add-expense", addExpense)
   .post("/edit-expense/:id", editExpense)
-  .delete("/delete-expense/:id", deleteExpense);
+  .delete("/delete-expense/:id", deleteExpense)
+  .get("/get-categories", getCategories)
+  .get("/get-category/:id", getCategory)
+  .post("/add-category", addCategory)
+  .post("/edit-category/:id", editCategory)
+  .delete("/delete-category/:id", deleteCategory);
 
 module.exports = router;
