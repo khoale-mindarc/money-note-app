@@ -1,6 +1,7 @@
 const {
   addIncome,
   getIncomes,
+  getIncomesByUserId,
   getIncome,
   deleteIncome,
   editIncome,
@@ -9,6 +10,7 @@ const {
 const {
   addExpense,
   getExpenses,
+  getExpensesByUserId,
   getExpense,
   deleteExpense,
   editExpense,
@@ -21,6 +23,12 @@ const {
   deleteCategory,
   editCategory,
 } = require("../controllers/category");
+const {
+  getUsers,
+  login,
+  logout,
+  createUser,
+} = require("../controllers/user");
 
 const router = require("express").Router();
 
@@ -31,15 +39,17 @@ router.get("/", (req, res) => {
 // income
 router
   .get("/get-incomes", getIncomes)
+  .get("/get-incomes/:userId", getIncomesByUserId)
   .get("/get-incomes-over-time/:month/:year", getIncomesOverTime)
-  .get("/get-income/:id", getIncome)
+  .get("/get-income", getIncome)
   .post("/add-income", addIncome)
-  .post("/edit-income/:id", editIncome)
-  .delete("/delete-income/:id", deleteIncome);
+  .post("/edit-income", editIncome)
+  .delete("/delete-income", deleteIncome);
 
 // expense
 router
   .get("/get-expenses", getExpenses)
+  .get("/get-expenses/:userId", getExpensesByUserId)
   .get("/get-expenses-over-time/:month/:year", getExpensesOverTime)
   .get("/get-expense/:id", getExpense)
   .post("/add-expense", addExpense)
@@ -54,4 +64,10 @@ router
   .post("/edit-category/:id", editCategory)
   .delete("/delete-category/:id", deleteCategory);
 
+// login
+router
+  .post("/login", login)
+  .get("/logout", logout)
+  .post("/sign-up", createUser)
+  .get("/get-users", getUsers);
 module.exports = router;
